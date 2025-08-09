@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pig Latin Converter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 50px;
+      background-color: hwb(0 88% 9%);
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    input, button {
+      font-size: 18px;
+      padding: 10px;
+      margin: 5px;
+    }
+
+    #result {
+      margin-top: 20px;s
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .dark-mode {
+      background-color: #121212;
+      color: white;
+    }
+
+    .dark-mode input, .dark-mode button {
+      background-color: #333;
+      color: white;
+      border: 1px solid white;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🐷 Pig Latin Converter</h1>
+
+  <input type="text" id="wordInput" placeholder="Enter a word or sentence">
+  <button onclick="convertToPigLatin()">Convert</button>
+  <button onclick="toggleDarkMode()">🌙 Toggle Dark Mode</button>
+
+  <div id="result"></div>
+
+  <script>
+    function convertWordToPigLatin(word) {
+      const vowels = ['a', 'e', 'i', 'o', 'u'];
+      if (vowels.includes(word[0])) {
+        return word + "yay";
+      } else {
+        let consonants = '';
+        let i = 0;
+        while (i < word.length && !vowels.includes(word[i])) {
+          consonants += word[i];
+          i++;
+        }
+        return word.slice(i) + consonants + "ay";
+      }
+    }
+
+    function convertToPigLatin() {
+      const input = document.getElementById("wordInput").value.trim().toLowerCase();
+      if (!input) {
+        document.getElementById("result").innerText = "Please enter something!";
+        return;
+      }
+
+      const words = input.split(" ");
+      const pigLatinWords = words.map(word => convertWordToPigLatin(word));
+      const result = pigLatinWords.join(" ");
+
+      document.getElementById("result").innerText = "Pig Latin: " + result;
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle("dark-mode");
+    }
+  </script>
+
+</body>
+</html>
